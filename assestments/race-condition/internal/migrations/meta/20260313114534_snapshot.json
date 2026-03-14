@@ -1,0 +1,135 @@
+{
+	"version": "7",
+	"dialect": "postgresql",
+	"tables": {
+		"public.account": {
+			"name": "account",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "integer",
+					"primaryKey": true,
+					"notNull": true,
+					"identity": {
+						"type": "always",
+						"name": "account_id_seq",
+						"schema": "public",
+						"increment": "1",
+						"startWith": "1",
+						"minValue": "1",
+						"maxValue": "2147483647",
+						"cache": "1",
+						"cycle": false
+					}
+				},
+				"balance": {
+					"name": "balance",
+					"type": "numeric",
+					"primaryKey": false,
+					"notNull": true,
+					"default": 0
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.transaction": {
+			"name": "transaction",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "integer",
+					"primaryKey": true,
+					"notNull": true,
+					"identity": {
+						"type": "always",
+						"name": "transaction_id_seq",
+						"schema": "public",
+						"increment": "1",
+						"startWith": "1",
+						"minValue": "1",
+						"maxValue": "2147483647",
+						"cache": "1",
+						"cycle": false
+					}
+				},
+				"timestamp": {
+					"name": "timestamp",
+					"type": "timestamp with time zone",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"account_id": {
+					"name": "account_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"before_balance": {
+					"name": "before_balance",
+					"type": "numeric",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"amount": {
+					"name": "amount",
+					"type": "numeric",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"after_balance": {
+					"name": "after_balance",
+					"type": "numeric",
+					"primaryKey": false,
+					"notNull": true,
+					"generated": {
+						"as": "\"transaction\".\"before_balance\" + \"transaction\".\"amount\"",
+						"type": "stored"
+					}
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"transaction_account_id_account_id_fk": {
+					"name": "transaction_account_id_account_id_fk",
+					"tableFrom": "transaction",
+					"tableTo": "account",
+					"columnsFrom": [
+						"account_id"
+					],
+					"columnsTo": [
+						"id"
+					],
+					"onDelete": "no action",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		}
+	},
+	"enums": {},
+	"schemas": {},
+	"sequences": {},
+	"roles": {},
+	"policies": {},
+	"views": {},
+	"_meta": {
+		"schemas": {},
+		"tables": {},
+		"columns": {}
+	},
+	"id": "57befc41-a6d2-4616-8c70-4b1f96e058a2",
+	"prevId": "00000000-0000-0000-0000-000000000000"
+}

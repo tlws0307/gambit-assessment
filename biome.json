@@ -1,0 +1,23 @@
+{
+	"root": true,
+	"$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"linter": {
+		"enabled": true
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": ["**", "!!**/node_modules"]
+	}
+}

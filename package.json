@@ -1,0 +1,27 @@
+{
+	"name": "@gambit-group/assessment",
+	"private": "true",
+	"scripts": {
+		"format": "biome format . --write",
+		"test": "vitest --watch=false",
+		"gen:migrations:race-condition": "pnpx tsx ./assestments/race-condition/internal/scripts/gen-migrations.ts",
+		"debug": "vitest run ./assestments/race-condition/index.spec.ts"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.5",
+		"@electric-sql/pglite": "^0.3.15",
+		"@testcontainers/postgresql": "^11.11.0",
+		"@types/node": "^25.2.0",
+		"@types/pg": "^8.16.0",
+		"drizzle-orm": "^0.45.1",
+		"drizzle-kit": "^0.31.8",
+		"pg": "^8.18.0",
+		"testcontainers": "^11.11.0",
+		"typescript": "^5.9.3",
+		"vitest": "v4.0.18"
+	},
+	"packageManager": "pnpm@10.30.3",
+	"engines": {
+		"node": ">=24.0.0"
+	}
+}
