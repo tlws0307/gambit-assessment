@@ -46,7 +46,11 @@ export const createQueriesFactory = ($db: DrizzlePgClient | DrizzlePgPool) => {
 		return record;
 	}
 
-	async function recomputeTrxs(tx: Parameters<Parameters<typeof $db.transaction>[0]>[0], transactionId: typeof $schema.trx.$inferSelect.id | null, accountId: typeof $schema.trx.$inferSelect.accountId) 
+	async function recomputeTrxs(
+		tx: Parameters<Parameters<typeof $db.transaction>[0]>[0], 
+		transactionId: typeof $schema.trx.$inferSelect.id | null, 
+		accountId: typeof $schema.trx.$inferSelect.accountId,
+	) 
 	: Promise<typeof $schema.trx.$inferSelect | null | undefined> {
 		const trxs = await tx
 			.select()
@@ -84,13 +88,16 @@ export const createQueriesFactory = ($db: DrizzlePgClient | DrizzlePgPool) => {
 		return transactionId ? updatedTrx.find((x) => x.id === transactionId) : null;
 	}
 
+	let i = 0;
 	async function addTransaction(
 		data: Simplify<Omit<typeof $schema.trx.$inferInsert, "beforeBalance">>,
 	): Promise<typeof $schema.trx.$inferSelect> {
 		// TASK 1: Implement this function to add a transaction for an account.
 		const { accountId, amount, timestamp } = data;
 		try {
+			const j = i+= 1;
 			return await $db.transaction(async (tx) => {
+				// console.log(`${j} - ${timestamp} ${Date.now()} - start`);
 				const [account] =  await tx
 					.update($schema.account)
 					.set({
@@ -123,6 +130,7 @@ export const createQueriesFactory = ($db: DrizzlePgClient | DrizzlePgPool) => {
 					})
 					.returning();
 				
+				// console.log(`${j} - ${timestamp} ${Date.now()} - ${JSON.stringify(trxRow)}`);
 				if (!trxRow) throw new Error('Failed to insert transaction');
 				const result = await recomputeTrxs(tx, trxRow.id, accountId);
 				if (!result) throw new Error('Failed to insert transaction');
@@ -130,6 +138,8 @@ export const createQueriesFactory = ($db: DrizzlePgClient | DrizzlePgPool) => {
 				// 	.update($schema.account)
 				// 	.set({ balance: afterBalance })
 				// 	.where(eq($schema.account.id, accountId));
+				
+				// console.log(`${j} - ${timestamp} ${Date.now()} - end`);
 
 				return result;
 			});

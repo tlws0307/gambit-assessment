@@ -58,7 +58,7 @@ export async function getTestDB(config: TestDBConfig = {}) {
 	let pgContainer: StartedPostgreSqlContainer | undefined;
 
 	if (config.instance === "remote") {
-		db = createPgClient("client", {
+		db = createPgClient("pool", {
 			pg: {
 				host: "13.251.188.218",
 				port: 5432,

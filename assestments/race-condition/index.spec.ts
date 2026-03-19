@@ -2,11 +2,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { and, asc, eq, gt, ne } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
-import { getTestDB, getClient } from "../../test-utils/get-test-db";
+import { getTestDB } from "../../test-utils/get-test-db";
 import { createQueriesFactory } from ".";
 import * as $schema from "./internal/schema";
-import pg from "pg";
-import { drizzle } from "drizzle-orm/singlestore";
 
 describe("race condition", async () => {
 	const __dirname = path.dirname(fileURLToPath(import.meta.url));

@@ -5,7 +5,8 @@
 		"format": "biome format . --write",
 		"test": "vitest --watch=false",
 		"gen:migrations:race-condition": "pnpx tsx ./assestments/race-condition/internal/scripts/gen-migrations.ts",
-		"debug": "vitest run ./assestments/race-condition/index.spec.ts"
+		"debug": "vitest run ./assestments/race-condition/index.spec.ts",
+		"debug1": "vitest run ./assestments/object-pick/index.spec.ts"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.5",

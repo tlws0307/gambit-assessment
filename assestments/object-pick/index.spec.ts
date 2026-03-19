@@ -185,4 +185,19 @@ describe("objectPick", () => {
 			],
 		});
 	});
+
+	it("should match asterisk (*) pattern to pick multiple properties object", () => {
+		const obj = {
+			users: {
+				user1: { name: "Clayton", role: "admin" },
+				user2: { name: "Chung Han", role: "user" }
+			}
+		};
+
+		// pick the name property from the second item
+		const result = objectPick(obj, ['users.*.name']);
+		expectTypeOf(result).toMatchTypeOf<{ users: { [key: string]: { name: string } } }>();
+
+		expect(result).toEqual({ users: { user1: { name: "Clayton" }, user2: { name: "Chung Han" } } });
+	});
 });
